@@ -2,12 +2,67 @@
 <html>
 <head>
     <title>Wedding Pictures</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <style>
-        body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; }
-        iframe { width: 100%; height: 100%; border: none; }
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            -webkit-text-size-adjust: 100%; /* Prevent font scaling on iOS */
+        }
+        iframe {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            transform-origin: 0 0;
+        }
+        
+        /* Mobile-specific adjustments */
+        @media screen and (max-width: 768px) {
+            iframe {
+                /* Optional: Zoom in slightly for mobile */
+                width: 150%;
+                height: 150%;
+                transform: scale(0.6667); /* Counteract the 150% sizing */
+            }
+        }
+        
+        /* Portrait mode adjustments */
+        @media screen and (orientation: portrait) {
+            iframe {
+                /* Additional portrait-specific adjustments if needed */
+            }
+        }
     </style>
 </head>
 <body>
-    <iframe src="https://118.100.11.213/WedPict/"></iframe>
+    <iframe src="http://118.100.11.213/WedPict"></iframe>
+    
+    <script>
+        // Optional: Force desktop mode on mobile
+        function setMobileView() {
+            const iframe = document.querySelector('iframe');
+            const meta = iframe.contentDocument.createElement('meta');
+            meta.name = 'viewport';
+            meta.content = 'width=1200'; // Force desktop width
+            iframe.contentDocument.head.appendChild(meta);
+        }
+        
+        // For cross-origin iframes, this won't work due to security restrictions
+        // Alternative solution below
+        
+        // Mobile redirect alternative (if you control both pages)
+        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+            // Option 1: Redirect directly to the mobile version (if available)
+            // window.location.href = "http://118.100.11.213/WedPict/mobile";
+            
+            // Option 2: Add viewport scaling
+            document.querySelector('iframe').style.transform = 'scale(1)';
+        }
+    </script>
 </body>
 </html>
